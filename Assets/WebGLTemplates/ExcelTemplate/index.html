@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | lahta</title>
+  </head>
+  <body style="text-align: center">
+    <canvas id="unity-canvas" style="display: table; width: 100%; height: 100%;"></canvas>
+    <script src="Build/Builds.asm.loader.js"></script>
+	<script src="ExcelLibs/xlsx.full.min.js"></script>
+		
+    <script>
+      createUnityInstance(document.querySelector("#unity-canvas"), {
+        dataUrl: "Build/Builds.data",
+        frameworkUrl: "Build/Builds.asm.framework.js",
+        codeUrl: "Build/Builds.asm.js",
+        memoryUrl: "Build/Builds.asm.mem",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "lahta",
+        productVersion: "0.1",
+      });
+    </script>
+  </body>
+</html>
