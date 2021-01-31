@@ -31,12 +31,12 @@ public class LoadExcelAndConvertToCsv : UnityEngine.MonoBehaviour
 
     private IExcelToCsv SwitchLibrary(ConvertLibrary convertLibrary)
     {
-#if UNITY_WEBGL || !UNITY_EDITOR
+#if UNITY_WEBGL && !UNITY_EDITOR
         return new ExcelToCsvWithJavascript();
 #else
         if (convertLibrary == ConvertLibrary.Npoi) 
             return new ExcelToCsvWithNpoi();
-        //else return new ExcelToCsvWithJavascript();
+        else return new ExcelToCsvWithJavascript();
 #endif
     }
 
