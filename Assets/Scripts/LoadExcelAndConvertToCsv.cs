@@ -6,7 +6,15 @@ using UnityEngine;
 public class LoadExcelAndConvertToCsv : UnityEngine.MonoBehaviour
 {
     private const string FilePath = "TestSpreadsheet.xlsx";
-        
+
+    [SerializeField] private ConvertLibrary _convertLibrary = ConvertLibrary.Npoi;
+
+    private enum ConvertLibrary
+    {
+        SheetJs,
+        Npoi
+    }
+
     private void Start()
     {
         IMemoryStreamLoader loader = new MemoryStreamLoader();
@@ -15,10 +23,21 @@ public class LoadExcelAndConvertToCsv : UnityEngine.MonoBehaviour
 
     private void OnLoaded(MemoryStream stream)
     {
-        ExcelToCsvWithJavascript excelToCsv = new ExcelToCsvWithJavascript();
+        IExcelToCsv excelToCsv = SwitchLibrary(_convertLibrary);
         string csv = excelToCsv.Convert(stream);
-            
+
         Debug.Log($"C# rezult received : \n {csv}");
+    }
+
+    private IExcelToCsv SwitchLibrary(ConvertLibrary convertLibrary)
+    {
+#if UNITY_WEBGL || !UNITY_EDITOR
+        return new ExcelToCsvWithJavascript();
+#else
+        if (convertLibrary == ConvertLibrary.Npoi) 
+            return new ExcelToCsvWithNpoi();
+        //else return new ExcelToCsvWithJavascript();
+#endif
     }
 
     private void OnLoadFailed(string message) =>
