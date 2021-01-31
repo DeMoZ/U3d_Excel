@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DataConverters
 {
-    public class ExcelToCsvWithJavascript
+    public class ExcelToCsvWithJavascript : IExcelToCsv
     {
 #if (!UNITY_EDITOR && UNITY_WEBGL)
 #pragma warning disable CA2101
